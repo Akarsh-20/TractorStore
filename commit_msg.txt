@@ -1,0 +1,1 @@
+Initial setup: Vite + React 19 + TypeScript + Tailwind
