@@ -27,39 +27,71 @@ const LoginPage = () => {
     }
   };
 
-  // fill in the test creds quickly
+  // fill in test creds quickly
   const fillTestCredentials = () => {
     setUsername('mor_2314');
     setPassword('83r5^_');
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-950 via-gray-900 to-gray-950 flex items-center justify-center p-4 relative overflow-hidden">
+    <div className="min-h-screen bg-gray-50 flex">
 
-      {/* background glow blobs */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+      {/* left panel - branding */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-green-600 to-emerald-700 flex-col items-center justify-center p-12 relative overflow-hidden">
 
-      <div className="w-full max-w-md relative z-10">
+        {/* decorative circles */}
+        <div className="absolute top-0 right-0 w-80 h-80 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/10 rounded-full translate-y-1/2 -translate-x-1/2" />
 
-        {/* brand header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-400 to-emerald-600 rounded-3xl mb-5 shadow-2xl shadow-green-500/40">
-            <span className="text-4xl">🚜</span>
+        <div className="relative z-10 text-center">
+          <img
+            src="/tractor.png"
+            alt="Tractor Store"
+            className="w-32 h-32 object-contain mx-auto mb-8 drop-shadow-2xl"
+          />
+          <h1 className="text-5xl font-bold text-white mb-4 tracking-tight">
+            Tractor Store
+          </h1>
+          <p className="text-green-100 text-lg max-w-sm leading-relaxed">
+            Your one-stop shop for everything agricultural.
+          </p>
+
+          {/* small feature pills */}
+          <div className="flex flex-wrap justify-center gap-3 mt-10">
+            {['Quality Products', 'Best Prices', 'Fast Delivery'].map((tag) => (
+              <span
+                key={tag}
+                className="bg-white/20 text-white text-sm px-4 py-1.5 rounded-full backdrop-blur-sm border border-white/20"
+              >
+                {tag}
+              </span>
+            ))}
           </div>
-          <h1 className="text-4xl font-bold text-white tracking-tight">Tractor Store</h1>
-          <p className="text-gray-400 mt-2 text-sm">Sign in to your account</p>
         </div>
+      </div>
 
-        {/* login card */}
-        <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-8 shadow-2xl">
+      {/* right panel - login form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
+        <div className="w-full max-w-md">
+
+          {/* mobile logo (only shows on small screens) */}
+          <div className="flex items-center gap-3 mb-10 lg:hidden">
+            <img src="/tractor.png" alt="logo" className="w-10 h-10 object-contain" />
+            <span className="text-xl font-bold text-gray-800">Tractor Store</span>
+          </div>
+
+          <div className="mb-8">
+            <h2 className="text-3xl font-bold text-gray-900">Welcome back</h2>
+            <p className="text-gray-500 mt-1">Sign in to your account</p>
+          </div>
+
           <form onSubmit={handleSubmit} className="space-y-5" id="login-form">
 
             {/* error box */}
             {error && (
               <div
                 id="login-error"
-                className="bg-red-500/10 border border-red-500/30 text-red-400 text-sm px-4 py-3 rounded-xl flex items-center gap-2"
+                className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl flex items-center gap-2"
               >
                 <span>⚠️</span>
                 <span>{error}</span>
@@ -68,7 +100,7 @@ const LoginPage = () => {
 
             {/* username */}
             <div>
-              <label htmlFor="username" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="username" className="block text-sm font-medium text-gray-700 mb-1.5">
                 Username
               </label>
               <input
@@ -79,13 +111,13 @@ const LoginPage = () => {
                 placeholder="Enter your username"
                 required
                 autoComplete="username"
-                className="w-full bg-white/5 border border-white/10 text-white placeholder-gray-500 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-green-500/60 focus:bg-white/10 transition-all duration-200"
+                className="w-full border border-gray-200 bg-white text-gray-900 placeholder-gray-400 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-200"
               />
             </div>
 
             {/* password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
                 Password
               </label>
               <div className="relative">
@@ -97,13 +129,13 @@ const LoginPage = () => {
                   placeholder="Enter your password"
                   required
                   autoComplete="current-password"
-                  className="w-full bg-white/5 border border-white/10 text-white placeholder-gray-500 rounded-xl px-4 py-3 pr-12 text-sm focus:outline-none focus:border-green-500/60 focus:bg-white/10 transition-all duration-200"
+                  className="w-full border border-gray-200 bg-white text-gray-900 placeholder-gray-400 rounded-xl px-4 py-3 pr-12 text-sm focus:outline-none focus:border-green-500 focus:ring-2 focus:ring-green-500/20 transition-all duration-200"
                 />
                 <button
                   type="button"
                   id="toggle-password"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-300 transition-colors text-lg"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors text-lg"
                   aria-label="Toggle password visibility"
                 >
                   {showPassword ? '🙈' : '👁️'}
@@ -116,11 +148,11 @@ const LoginPage = () => {
               type="submit"
               id="login-submit"
               disabled={loading}
-              className="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-green-500/25 mt-2"
+              className="w-full bg-green-600 hover:bg-green-500 disabled:bg-green-300 disabled:cursor-not-allowed text-white font-semibold py-3 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-md shadow-green-500/20 mt-2"
             >
               {loading ? (
                 <>
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                  <div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
                   Signing in...
                 </>
               ) : (
@@ -129,25 +161,25 @@ const LoginPage = () => {
             </button>
           </form>
 
-          {/* test credentials section */}
-          <div className="mt-6 pt-6 border-t border-white/10">
-            <p className="text-xs text-gray-500 text-center mb-3">Test credentials</p>
+          {/* test credentials */}
+          <div className="mt-8 pt-6 border-t border-gray-100">
+            <p className="text-xs text-gray-400 text-center mb-3">Test credentials</p>
             <button
               id="fill-test-creds"
               type="button"
               onClick={fillTestCredentials}
-              className="w-full bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-4 py-3 text-xs text-gray-400 font-mono transition-all duration-200 text-left"
+              className="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-500 font-mono transition-all duration-200 text-left"
             >
-              <div>username: <span className="text-green-400">mor_2314</span></div>
-              <div>password: <span className="text-green-400">83r5^_</span></div>
-              <div className="text-gray-600 mt-1">click to autofill</div>
+              <div>username: <span className="text-green-600 font-semibold">mor_2314</span></div>
+              <div>password: <span className="text-green-600 font-semibold">83r5^_</span></div>
+              <div className="text-gray-400 mt-1">click to autofill</div>
             </button>
           </div>
-        </div>
 
-        <p className="text-center text-xs text-gray-600 mt-6">
-          Tractor Store &copy; {new Date().getFullYear()}
-        </p>
+          <p className="text-center text-xs text-gray-400 mt-6">
+            Tractor Store &copy; {new Date().getFullYear()}
+          </p>
+        </div>
       </div>
     </div>
   );

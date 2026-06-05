@@ -1,1 +1,1 @@
-Initial setup: Vite + React 19 + TypeScript + Tailwind
+feat: white theme login, tractor favicon and tab title
