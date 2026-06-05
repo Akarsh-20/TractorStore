@@ -1,1 +1,1 @@
-feat: white theme login, tractor favicon and tab title
+feat: session management, navbar, logout, and axios interceptor
