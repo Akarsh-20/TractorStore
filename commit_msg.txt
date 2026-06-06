@@ -1,1 +1,1 @@
-feat: transform api data to authentic tractor models and pricing
+feat: add product details page and add new product form

@@ -42,6 +42,16 @@ export const getProducts = async (): Promise<Product[]> => {
   return response.data.map(transformToTractor);
 };
 
+export const getProductById = async (id: number): Promise<Product> => {
+  const response = await axiosInstance.get<Product>(`/products/${id}`);
+  return transformToTractor(response.data, id - 1); // approximate index matching based on ID
+};
+
+export const createProduct = async (productData: Partial<Product>): Promise<Product> => {
+  const response = await axiosInstance.post<Product>('/products', productData);
+  return response.data;
+};
+
 export const deleteProduct = async (id: number): Promise<void> => {
   await axiosInstance.delete(`/products/${id}`);
 };
