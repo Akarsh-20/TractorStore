@@ -19,7 +19,6 @@ const ProductsPage = () => {
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [sortOrder, setSortOrder] = useState<'latest' | 'oldest'>('latest');
-  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {

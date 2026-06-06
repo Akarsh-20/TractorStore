@@ -1,1 +1,1 @@
-feat: add sorting capability to products list
+fix: remove unused and unimported useNavigate hook
