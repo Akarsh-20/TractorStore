@@ -1,1 +1,1 @@
-feat: add navbar, logout, and axios interceptor for session expiry
+feat: update navbar to green theme and add navigation links

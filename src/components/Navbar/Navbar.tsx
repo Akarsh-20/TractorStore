@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 const Navbar = () => {
@@ -11,7 +11,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
+    <nav className="bg-gradient-to-r from-green-700 to-emerald-600 text-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16 items-center">
           
@@ -20,23 +20,37 @@ const Navbar = () => {
             className="flex items-center gap-3 cursor-pointer group" 
             onClick={() => navigate('/products')}
           >
-            <div className="bg-green-50 p-2 rounded-lg group-hover:bg-green-100 transition-colors">
-              <img src="/tractor.png" alt="Tractor Store" className="w-8 h-8 object-contain" />
+            <div className="bg-white/20 p-2 rounded-lg group-hover:bg-white/30 transition-colors">
+              <img src="/tractor.png" alt="Tractor Store" className="w-8 h-8 object-contain drop-shadow-md" />
             </div>
-            <span className="text-xl font-bold text-gray-900 tracking-tight">Tractor Store</span>
+            <span className="text-xl font-bold tracking-tight">Tractor Store</span>
+          </div>
+
+          {/* desktop navigation links */}
+          <div className="hidden md:flex items-center space-x-8">
+            <Link to="/" className="text-green-100 hover:text-white font-medium transition-colors">Home</Link>
+            <Link to="/products" className="text-white font-semibold transition-colors">Products</Link>
+            <Link to="#" className="text-green-100 hover:text-white font-medium transition-colors">Details</Link>
           </div>
 
           {/* actions */}
           <div>
             <button
               onClick={handleLogout}
-              className="text-gray-600 hover:text-red-600 font-medium px-4 py-2 rounded-lg hover:bg-red-50 transition-all duration-200"
+              className="text-green-100 hover:text-white font-medium px-4 py-2 rounded-lg hover:bg-white/10 transition-all duration-200"
             >
               Logout
             </button>
           </div>
 
         </div>
+      </div>
+
+      {/* mobile navigation (simple fallback) */}
+      <div className="md:hidden bg-green-800/50 px-4 py-2 flex justify-between border-t border-white/10">
+        <Link to="/" className="text-green-100 hover:text-white text-sm">Home</Link>
+        <Link to="/products" className="text-white text-sm font-semibold">Products</Link>
+        <Link to="#" className="text-green-100 hover:text-white text-sm">Details</Link>
       </div>
     </nav>
   );
