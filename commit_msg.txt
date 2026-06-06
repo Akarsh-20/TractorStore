@@ -1,1 +1,1 @@
-Added Add Product link to navbar
+wip: start working on products list basic table
