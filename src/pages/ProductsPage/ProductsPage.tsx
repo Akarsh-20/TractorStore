@@ -18,6 +18,8 @@ const ProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [sortOrder, setSortOrder] = useState<'latest' | 'oldest'>('latest');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -52,16 +54,31 @@ const ProductsPage = () => {
     return <div className="p-8 text-center text-gray-500">Loading products...</div>;
   }
 
+  // Sort products based on ID (larger ID means it was added more recently)
+  const sortedProducts = [...products].sort((a, b) => {
+    return sortOrder === 'latest' ? b.id - a.id : a.id - b.id;
+  });
+
   return (
     <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 mt-6">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-900">Products List</h1>
-        <Link 
-          to="/products/new" 
-          className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-medium transition-colors"
-        >
-          + Add Product
-        </Link>
+        <div className="flex items-center gap-4">
+          <select
+            value={sortOrder}
+            onChange={(e) => setSortOrder(e.target.value as 'latest' | 'oldest')}
+            className="border border-gray-200 bg-gray-50 text-gray-700 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-green-500 transition-all font-medium cursor-pointer"
+          >
+            <option value="latest">Sort by Latest</option>
+            <option value="oldest">Sort by Oldest</option>
+          </select>
+          <Link 
+            to="/products/new" 
+            className="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+          >
+            + Add Product
+          </Link>
+        </div>
       </div>
 
       <div className="overflow-x-auto">
@@ -77,7 +94,7 @@ const ProductsPage = () => {
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
+            {sortedProducts.map((product) => (
               <tr key={product.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
                 <td className="py-3 px-4 text-gray-500 font-mono text-sm">#{product.id}</td>
                 <td className="py-3 px-4">

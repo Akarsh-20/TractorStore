@@ -1,1 +1,1 @@
-feat: display product ID column in products table
+feat: add sorting capability to products list
