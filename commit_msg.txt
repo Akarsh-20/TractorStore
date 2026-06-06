@@ -1,1 +1,1 @@
-feat: add delete product functionality with confirmation
+feat: transform api data to authentic tractor models and pricing
