@@ -1,1 +1,1 @@
-wip: start working on products list basic table
+fix: correct product data mapping in table

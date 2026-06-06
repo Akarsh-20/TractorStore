@@ -65,18 +65,16 @@ const ProductsPage = () => {
                 <td className="py-3 px-4">
                   <img 
                     src={getLocalImage(product.id)} 
-                    alt="product" 
+                    alt={product.title} 
                     className="w-12 h-12 object-cover rounded-lg border border-gray-200"
                   />
                 </td>
                 <td className="py-3 px-4 text-gray-900 font-medium">
-                  {/* BUG: using product.name instead of product.title */}
-                  {(product as any).name || 'Unknown Name'}
+                  {product.title}
                 </td>
                 <td className="py-3 px-4 text-gray-500 capitalize">{product.category}</td>
                 <td className="py-3 px-4 text-green-700 font-semibold">
-                  {/* BUG: using product.cost instead of product.price */}
-                  ${(product as any).cost?.toFixed(2) || '0.00'}
+                  ${product.price.toFixed(2)}
                 </td>
                 <td className="py-3 px-4 text-right">
                   <Link to={`/products/${product.id}`} className="text-blue-600 hover:underline mr-4">View</Link>
