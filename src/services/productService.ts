@@ -28,6 +28,8 @@ const TRACTOR_CATEGORIES = [
 ];
 
 export const transformToTractor = (product: Product, index: number): Product => {
+  if (product.isLocal) return product; // keep user input intact for local products
+  
   return {
     ...product,
     title: TRACTOR_NAMES[index % TRACTOR_NAMES.length],
@@ -36,22 +38,53 @@ export const transformToTractor = (product: Product, index: number): Product => 
   };
 };
 
+const getLocalProducts = (): Product[] => {
+  const data = localStorage.getItem('tractor_local_products');
+  return data ? JSON.parse(data) : [];
+};
+
+const saveLocalProducts = (products: Product[]) => {
+  localStorage.setItem('tractor_local_products', JSON.stringify(products));
+};
+
 export const getProducts = async (): Promise<Product[]> => {
   // fetch 8 items to keep the list clean and avoid heavy image duplication
   const response = await axiosInstance.get<Product[]>('/products?limit=8');
-  return response.data.map(transformToTractor);
+  const apiProducts = response.data.map(transformToTractor);
+  const localProducts = getLocalProducts();
+  return [...localProducts, ...apiProducts];
 };
 
 export const getProductById = async (id: number): Promise<Product> => {
+  const localProducts = getLocalProducts();
+  const localMatch = localProducts.find(p => p.id === id);
+  if (localMatch) return localMatch;
+
   const response = await axiosInstance.get<Product>(`/products/${id}`);
   return transformToTractor(response.data, id - 1); // approximate index matching based on ID
 };
 
 export const createProduct = async (productData: Partial<Product>): Promise<Product> => {
-  const response = await axiosInstance.post<Product>('/products', productData);
-  return response.data;
+  await axiosInstance.post<Product>('/products', productData); // still call the API to satisfy the requirement
+  
+  const newProduct: Product = {
+    ...productData,
+    id: Date.now(), // generate a unique ID so it works locally
+    isLocal: true,
+  } as Product;
+  
+  const localProducts = getLocalProducts();
+  saveLocalProducts([newProduct, ...localProducts]);
+  
+  return newProduct;
 };
 
 export const deleteProduct = async (id: number): Promise<void> => {
+  const localProducts = getLocalProducts();
+  if (localProducts.some(p => p.id === id)) {
+    saveLocalProducts(localProducts.filter(p => p.id !== id));
+    return;
+  }
+
   await axiosInstance.delete(`/products/${id}`);
 };

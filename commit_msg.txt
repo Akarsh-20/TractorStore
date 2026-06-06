@@ -1,1 +1,1 @@
-feat: add product details page and add new product form
+fix: persist newly added products locally to display in UI
