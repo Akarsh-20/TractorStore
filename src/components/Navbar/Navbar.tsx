@@ -30,6 +30,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <Link to="/" className="text-green-100 hover:text-white font-medium transition-colors">Home</Link>
             <Link to="/products" className="text-white font-semibold transition-colors">Products</Link>
+            <Link to="/products/new" className="text-green-100 hover:text-white font-medium transition-colors">Add Product</Link>
             <Link to="#" className="text-green-100 hover:text-white font-medium transition-colors">Details</Link>
           </div>
 
@@ -47,10 +48,11 @@ const Navbar = () => {
       </div>
 
       {/* mobile navigation (simple fallback) */}
-      <div className="md:hidden bg-green-800/50 px-4 py-2 flex justify-between border-t border-white/10">
-        <Link to="/" className="text-green-100 hover:text-white text-sm">Home</Link>
-        <Link to="/products" className="text-white text-sm font-semibold">Products</Link>
-        <Link to="#" className="text-green-100 hover:text-white text-sm">Details</Link>
+      <div className="md:hidden bg-green-800/50 px-4 py-2 flex justify-between border-t border-white/10 overflow-x-auto gap-4">
+        <Link to="/" className="text-green-100 hover:text-white text-sm whitespace-nowrap">Home</Link>
+        <Link to="/products" className="text-white text-sm font-semibold whitespace-nowrap">Products</Link>
+        <Link to="/products/new" className="text-green-100 hover:text-white text-sm whitespace-nowrap">Add Product</Link>
+        <Link to="#" className="text-green-100 hover:text-white text-sm whitespace-nowrap">Details</Link>
       </div>
     </nav>
   );

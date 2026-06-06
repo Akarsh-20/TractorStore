@@ -1,1 +1,1 @@
-feat: update navbar to green theme and add navigation links
+Added Add Product link to navbar
