@@ -12,6 +12,7 @@ export interface AuthResponse {
 export interface AuthContextType {
   token: string | null;
   login: (credentials: LoginCredentials) => Promise<void>;
+  signup: (credentials: LoginCredentials) => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
 }

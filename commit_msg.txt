@@ -1,1 +1,1 @@
-chore: remove placeholder home and details links from navbar
+feat: add sign up flow to login page with local credential storage

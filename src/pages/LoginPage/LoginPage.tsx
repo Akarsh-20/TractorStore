@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 
 const LoginPage = () => {
-  const { login } = useAuth();
+  const { login, signup } = useAuth();
   const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
@@ -11,6 +11,7 @@ const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isSignUpMode, setIsSignUpMode] = useState(false);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -18,10 +19,18 @@ const LoginPage = () => {
     setLoading(true);
 
     try {
-      await login({ username, password });
+      if (isSignUpMode) {
+        await signup({ username, password });
+      } else {
+        await login({ username, password });
+      }
       navigate('/products');
-    } catch {
-      setError('Wrong username or password. Please try again.');
+    } catch (err: any) {
+      if (isSignUpMode) {
+        setError(err.message || 'Failed to create account. Username might exist.');
+      } else {
+        setError('Wrong username or password. Please try again.');
+      }
     } finally {
       setLoading(false);
     }
@@ -81,8 +90,12 @@ const LoginPage = () => {
           </div>
 
           <div className="mb-8">
-            <h2 className="text-3xl font-bold text-gray-900">Welcome back</h2>
-            <p className="text-gray-500 mt-1">Sign in to your account</p>
+            <h2 className="text-3xl font-bold text-gray-900">
+              {isSignUpMode ? 'Create an Account' : 'Welcome back'}
+            </h2>
+            <p className="text-gray-500 mt-1">
+              {isSignUpMode ? 'Sign up to start browsing tractors' : 'Sign in to your account'}
+            </p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5" id="login-form">
@@ -153,28 +166,44 @@ const LoginPage = () => {
               {loading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                  Signing in...
+                  {isSignUpMode ? 'Signing up...' : 'Signing in...'}
                 </>
               ) : (
-                'Sign In'
+                isSignUpMode ? 'Sign Up' : 'Sign In'
               )}
             </button>
           </form>
 
-          {/* test credentials */}
-          <div className="mt-8 pt-6 border-t border-gray-100">
-            <p className="text-xs text-gray-400 text-center mb-3">Test credentials</p>
+          {/* toggle mode */}
+          <div className="mt-6 text-center">
             <button
-              id="fill-test-creds"
               type="button"
-              onClick={fillTestCredentials}
-              className="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-500 font-mono transition-all duration-200 text-left"
+              onClick={() => {
+                setIsSignUpMode(!isSignUpMode);
+                setError('');
+              }}
+              className="text-sm font-semibold text-green-600 hover:text-green-700 transition-colors"
             >
-              <div>username: <span className="text-green-600 font-semibold">mor_2314</span></div>
-              <div>password: <span className="text-green-600 font-semibold">83r5^_</span></div>
-              <div className="text-gray-400 mt-1">click to autofill</div>
+              {isSignUpMode ? 'Already have an account? Log in' : "Don't have an account? Sign up"}
             </button>
           </div>
+
+          {/* test credentials */}
+          {!isSignUpMode && (
+            <div className="mt-6 pt-6 border-t border-gray-100">
+              <p className="text-xs text-gray-400 text-center mb-3">Test credentials</p>
+              <button
+                id="fill-test-creds"
+                type="button"
+                onClick={fillTestCredentials}
+                className="w-full bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-xl px-4 py-3 text-xs text-gray-500 font-mono transition-all duration-200 text-left"
+              >
+                <div>username: <span className="text-green-600 font-semibold">mor_2314</span></div>
+                <div>password: <span className="text-green-600 font-semibold">83r5^_</span></div>
+                <div className="text-gray-400 mt-1">click to autofill</div>
+              </button>
+            </div>
+          )}
 
           <p className="text-center text-xs text-gray-400 mt-6">
             Tractor Store &copy; {new Date().getFullYear()}
