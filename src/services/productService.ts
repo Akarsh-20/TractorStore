@@ -52,7 +52,12 @@ export const getProducts = async (): Promise<Product[]> => {
   const response = await axiosInstance.get<Product[]>('/products?limit=8');
   const apiProducts = response.data.map(transformToTractor);
   const localProducts = getLocalProducts();
-  return [...localProducts, ...apiProducts];
+  
+  // filter out apiProducts that have been edited or created locally to avoid duplicates
+  const localIds = new Set(localProducts.map(p => p.id));
+  const filteredApiProducts = apiProducts.filter(p => !localIds.has(p.id));
+  
+  return [...localProducts, ...filteredApiProducts];
 };
 
 export const getProductById = async (id: number): Promise<Product> => {
@@ -77,6 +82,29 @@ export const createProduct = async (productData: Partial<Product>): Promise<Prod
   saveLocalProducts([newProduct, ...localProducts]);
   
   return newProduct;
+};
+
+export const updateProduct = async (id: number, productData: Partial<Product>): Promise<Product> => {
+  await axiosInstance.put<Product>(`/products/${id}`, productData);
+  
+  const localProducts = getLocalProducts();
+  const existingIndex = localProducts.findIndex(p => p.id === id);
+  
+  const updatedProduct: Product = {
+    ...(productData as Product),
+    id,
+    isLocal: true, // mark as local so it overrides API and doesn't get transformed
+  };
+
+  if (existingIndex >= 0) {
+    localProducts[existingIndex] = updatedProduct;
+  } else {
+    // If it's an API product being edited for the first time, save it locally to persist the edit
+    localProducts.unshift(updatedProduct);
+  }
+  
+  saveLocalProducts(localProducts);
+  return updatedProduct;
 };
 
 export const deleteProduct = async (id: number): Promise<void> => {

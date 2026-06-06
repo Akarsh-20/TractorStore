@@ -7,6 +7,7 @@ import Layout from '../components/Layout/Layout';
 import ProductsPage from '../pages/ProductsPage/ProductsPage';
 import ProductDetailPage from '../pages/ProductDetailPage/ProductDetailPage';
 import AddProductPage from '../pages/AddProductPage/AddProductPage';
+import EditProductPage from '../pages/EditProductPage/EditProductPage';
 
 // all routes go here - add new ones as we build more pages
 const AppRoutes = () => {
@@ -36,6 +37,7 @@ const AppRoutes = () => {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/new" element={<AddProductPage />} />
           <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/products/:id/edit" element={<EditProductPage />} />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />
