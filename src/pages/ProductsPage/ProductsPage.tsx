@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getProducts } from '../../services/productService';
+import { getProducts, deleteProduct } from '../../services/productService';
 import type { Product } from '../../types/product.types';
 
 // maps product IDs to the downloaded local images
@@ -17,6 +17,7 @@ const getLocalImage = (id: number) => {
 const ProductsPage = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -31,6 +32,21 @@ const ProductsPage = () => {
     };
     fetchProducts();
   }, []);
+
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('Are you sure you want to delete this product?')) return;
+    
+    setDeletingId(id);
+    try {
+      await deleteProduct(id);
+      setProducts(products.filter(p => p.id !== id));
+    } catch (err) {
+      console.error('Failed to delete product');
+      alert('Could not delete product. Please try again.');
+    } finally {
+      setDeletingId(null);
+    }
+  };
 
   if (loading) {
     return <div className="p-8 text-center text-gray-500">Loading products...</div>;
@@ -69,7 +85,7 @@ const ProductsPage = () => {
                     className="w-12 h-12 object-cover rounded-lg border border-gray-200"
                   />
                 </td>
-                <td className="py-3 px-4 text-gray-900 font-medium">
+                <td className="py-3 px-4 text-gray-900 font-medium max-w-xs truncate" title={product.title}>
                   {product.title}
                 </td>
                 <td className="py-3 px-4 text-gray-500 capitalize">{product.category}</td>
@@ -77,13 +93,25 @@ const ProductsPage = () => {
                   ${product.price.toFixed(2)}
                 </td>
                 <td className="py-3 px-4 text-right">
-                  <Link to={`/products/${product.id}`} className="text-blue-600 hover:underline mr-4">View</Link>
-                  <Link to={`/products/${product.id}/edit`} className="text-gray-600 hover:underline mr-4">Edit</Link>
-                  {/* Delete not wired up yet in this first commit */}
-                  <button className="text-red-600 hover:underline">Delete</button>
+                  <Link to={`/products/${product.id}`} className="text-blue-600 hover:text-blue-800 font-medium mr-4">View</Link>
+                  <Link to={`/products/${product.id}/edit`} className="text-gray-600 hover:text-gray-900 font-medium mr-4">Edit</Link>
+                  <button 
+                    onClick={() => handleDelete(product.id)}
+                    disabled={deletingId === product.id}
+                    className="text-red-500 hover:text-red-700 font-medium disabled:opacity-50"
+                  >
+                    {deletingId === product.id ? 'Deleting...' : 'Delete'}
+                  </button>
                 </td>
               </tr>
             ))}
+            {products.length === 0 && (
+              <tr>
+                <td colSpan={5} className="py-8 text-center text-gray-500">
+                  No products found.
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
