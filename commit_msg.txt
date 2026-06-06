@@ -1,1 +1,1 @@
-feat: add sign up flow to login page with local credential storage
+docs: update readme with project details and setup instructions

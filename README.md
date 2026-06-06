@@ -1,73 +1,54 @@
-# React + TypeScript + Vite
+# Tractor Store 🚜
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A premium, front-end web application built for browsing, managing, and showcasing agricultural equipment. This project integrates with the Fake Store API, transforming its generic payload into a realistic Tractor Store catalog using a robust local persistence layer to support creation, editing, and deletion across sessions.
 
-Currently, two official plugins are available:
+## 🚀 Technologies Used
+- **Framework:** React 19 + TypeScript
+- **Build Tool:** Vite
+- **Styling:** Tailwind CSS v4
+- **Routing:** React Router DOM v7
+- **HTTP Client:** Axios (with custom interceptors)
+- **State/Persistence:** React Hooks & `localStorage`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## ✨ Features
+- **Authentication:** Secure login with mock JWT storage. Includes an automatic redirect on session expiration.
+- **Local Sign-Up Flow:** Create new accounts locally that persist across reloads.
+- **Dynamic Catalog:** Transforms the standard Fake Store API data into authentic tractor models with realistic pricing and custom imagery.
+- **CRUD Operations:**
+  - View detailed specifications on dedicated product pages.
+  - Add new tractors with a highly polished form.
+  - Edit existing products.
+  - Delete products with native confirmation prompts.
+- **Local Persistence:** Edits and newly created products are saved in the browser's local storage to mock a complete backend experience seamlessly.
 
-## React Compiler
+## 💻 How to Run the Application Locally
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Follow these steps to get the Tractor Store running on your local machine:
 
-## Expanding the ESLint configuration
+### 1. Prerequisites
+Ensure you have [Node.js](https://nodejs.org/) (v18 or higher) installed on your system.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 2. Install Dependencies
+Open your terminal, navigate to the root directory of the project, and run:
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 3. Start the Development Server
+Once dependencies are installed, start the Vite development server:
+```bash
+npm run dev
 ```
+
+### 4. View the App
+Open your browser and navigate to the local server URL provided in your terminal (typically `http://localhost:5173` or `http://localhost:5174`).
+
+### 5. Test Credentials
+To explore the application without creating a new account, you can use the default Fake Store API credentials:
+- **Username:** `mor_2314`
+- **Password:** `83r5^_`
+
+Alternatively, you can click "Sign Up" on the login page to create your own local account!
+
+---
+*Developed by Akarsh-20*
