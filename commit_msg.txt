@@ -1,1 +1,1 @@
-docs: update readme with project details and setup instructions
+feat: display product ID column in products table

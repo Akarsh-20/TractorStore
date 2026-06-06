@@ -68,6 +68,7 @@ const ProductsPage = () => {
         <table className="w-full text-left border-collapse">
           <thead>
             <tr className="border-b border-gray-200">
+              <th className="py-3 px-4 text-gray-600 font-semibold">ID</th>
               <th className="py-3 px-4 text-gray-600 font-semibold">Image</th>
               <th className="py-3 px-4 text-gray-600 font-semibold">Title</th>
               <th className="py-3 px-4 text-gray-600 font-semibold">Category</th>
@@ -78,6 +79,7 @@ const ProductsPage = () => {
           <tbody>
             {products.map((product) => (
               <tr key={product.id} className="border-b border-gray-100 hover:bg-gray-50 transition-colors">
+                <td className="py-3 px-4 text-gray-500 font-mono text-sm">#{product.id}</td>
                 <td className="py-3 px-4">
                   <img 
                     src={getLocalImage(product.id)} 
