@@ -1,1 +1,1 @@
-feat: implement edit product functionality with local persistence
+chore: remove placeholder home and details links from navbar
