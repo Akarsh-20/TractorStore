@@ -1,1 +1,1 @@
-feat: session management, navbar, logout, and axios interceptor
+feat: add navbar, logout, and axios interceptor for session expiry

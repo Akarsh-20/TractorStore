@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import PublicRoute from './PublicRoute';
-import MainLayout from '../layouts/MainLayout';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
+import Layout from '../components/Layout/Layout';
+import ProductsPage from '../pages/ProductsPage/ProductsPage';
 
-// all routes live here - add new pages in the protected section below
+// all routes go here - add new ones as we build more pages
 const AppRoutes = () => {
   return (
     <BrowserRouter>
@@ -22,19 +23,16 @@ const AppRoutes = () => {
           }
         />
 
-        {/* protected routes - wrapped in MainLayout for navbar */}
+        {/* protected routes */}
         <Route
-          path="/products"
           element={
             <ProtectedRoute>
-              <MainLayout>
-                <div className="text-gray-500 text-center py-20">
-                  Products page coming soon 🚜
-                </div>
-              </MainLayout>
+              <Layout />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route path="/products" element={<ProductsPage />} />
+        </Route>
 
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

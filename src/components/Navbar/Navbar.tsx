@@ -11,48 +11,31 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50">
+    <nav className="bg-white border-b border-gray-200 sticky top-0 z-50 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-
-          {/* logo + name */}
-          <div className="flex items-center gap-3">
-            <img
-              src="/tractor.png"
-              alt="Tractor Store"
-              className="w-9 h-9 object-contain"
-            />
-            <span className="text-lg font-bold text-gray-900 tracking-tight">
-              Tractor Store
-            </span>
+        <div className="flex justify-between h-16 items-center">
+          
+          {/* logo and brand */}
+          <div 
+            className="flex items-center gap-3 cursor-pointer group" 
+            onClick={() => navigate('/products')}
+          >
+            <div className="bg-green-50 p-2 rounded-lg group-hover:bg-green-100 transition-colors">
+              <img src="/tractor.png" alt="Tractor Store" className="w-8 h-8 object-contain" />
+            </div>
+            <span className="text-xl font-bold text-gray-900 tracking-tight">Tractor Store</span>
           </div>
 
-          {/* right side nav links can go here later */}
-          <div className="flex items-center gap-4">
-
-            {/* logout button */}
+          {/* actions */}
+          <div>
             <button
-              id="logout-btn"
               onClick={handleLogout}
-              className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-red-500 transition-colors duration-200 px-3 py-2 rounded-lg hover:bg-red-50"
+              className="text-gray-600 hover:text-red-600 font-medium px-4 py-2 rounded-lg hover:bg-red-50 transition-all duration-200"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-4 h-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h6a2 2 0 012 2v1"
-                />
-              </svg>
               Logout
             </button>
           </div>
+
         </div>
       </div>
     </nav>

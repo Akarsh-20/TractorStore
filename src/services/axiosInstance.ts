@@ -1,11 +1,12 @@
 import axios from 'axios';
 
-// base axios instance for all api calls
+const BASE_URL = 'https://fakestoreapi.com';
+
 const axiosInstance = axios.create({
-  baseURL: 'https://fakestoreapi.com',
+  baseURL: BASE_URL,
 });
 
-// attach token to every request
+// add token to requests
 axiosInstance.interceptors.request.use((config) => {
   const token = localStorage.getItem('tractor_token');
   if (token) {
@@ -14,11 +15,12 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-// if server returns 401, clear session and send to login
+// check for 401 on responses
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
+    if (error.response && error.response.status === 401) {
+      // clear session and go to login
       localStorage.removeItem('tractor_token');
       window.location.href = '/login';
     }
